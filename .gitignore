@@ -19,6 +19,8 @@
 # misc
 .DS_Store
 *.pem
+*.mp4
+*.mp3
 
 # debug
 npm-debug.log*
@@ -34,3 +36,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Add this line if it's not already present
+.env

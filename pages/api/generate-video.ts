@@ -3,6 +3,7 @@ import { bundle } from "@remotion/bundler";
 import { getCompositions, renderMedia } from "@remotion/renderer";
 import path from "path";
 import fs from 'fs';
+import axios from 'axios';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -26,6 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('Transcription data loaded. Last word end time:', 
       transcriptionData.words[transcriptionData.words.length - 1].end);
 
+    // Generate content (headlines and images)
+    const contentResponse = await axios.post('http://localhost:3000/api/generate-content', {
+      transcript: transcriptionData.words.map((w: any) => w.word).join(' ')
+    });
+    const { headlines, images, sessionId } = contentResponse.data;
+
     const bundleLocation = await bundle(path.resolve('./remotion/index.ts'));
     console.log('Bundle created');
 
@@ -33,7 +40,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       transcription: transcriptionData,
       audioFileName,
       audioDuration: parseFloat(audioDuration),
+      headlines,
+      images: images.map((img: string) => img.replace('/public/', '')) // Remove '/public/' from the path
     };
+
+    console.log('generate-video: Input props:', inputProps);
 
     console.log('Getting compositions');
     const comps = await getCompositions(bundleLocation, { inputProps });
@@ -46,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const fps = video.fps;
-    const durationInFrames = Math.ceil(parseFloat(audioDuration) * fps);
+    const durationInFrames = Math.max(Math.ceil(parseFloat(audioDuration) * fps), 1);
 
     console.log(`Video composition found. Setting duration to ${durationInFrames} frames (${audioDuration} seconds)`);
 
@@ -73,8 +84,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     console.log(`Video rendering completed. Actual duration: ${durationInFrames} frames (${audioDuration} seconds)`);
 
-    // Clean up the temporary file
+    // Clean up the temporary files
     fs.unlinkSync(tempFilePath);
+    const tempImageDir = path.join(process.cwd(), 'public', 'temp', sessionId);
+    fs.rmSync(tempImageDir, { recursive: true, force: true });
 
     const videoUrl = `/videos/${outputFilename}`;
     res.status(200).json({ videoUrl });
