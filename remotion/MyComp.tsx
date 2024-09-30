@@ -14,6 +14,9 @@ import {
   continueRender
 } from 'remotion';
 import { Transcription } from './types';
+import DiagramRenderer from './DiagramRenderer';
+import { DiagramSequence } from './DiagramSequence';
+import { ImageSequence } from './ImageSequence';
 
 // Inline Subtitle component
 const Subtitle: React.FC<{
@@ -442,11 +445,13 @@ export const MyComp: React.FC<{
   audioDuration: number;
   headlines: string[];
   images: string[];
-}> = ({ transcription, audioFileName, audioDuration, headlines, images }) => {
+  diagramDescription: any;
+  diagramUrl: string;
+}> = ({ transcription, audioFileName, audioDuration, headlines, images, diagramDescription, diagramUrl }) => {
   const videoConfig = useVideoConfig();
   const frame = useCurrentFrame();
 
-  console.log('MyComp: Received props:', { transcription, audioFileName, audioDuration, headlines, images });
+  console.log('MyComp: Received props:', { transcription, audioFileName, audioDuration, headlines, images, diagramDescription, diagramUrl });
 
   const words = transcription?.words || [];
 
@@ -501,6 +506,23 @@ export const MyComp: React.FC<{
     [-5, 5],
     { extrapolateRight: 'clamp' }
   );
+
+  // Calculate durations
+  const totalFrames = videoConfig.durationInFrames;
+  const diagramDuration = Math.min(10 * videoConfig.fps, totalFrames / 3); // Show diagram for 10 seconds or 1/3 of the video, whichever is longer
+  const remainingFrames = totalFrames - diagramDuration;
+  const imagesCount = images.length;
+  const framesPerImage = Math.floor(remainingFrames / imagesCount);
+
+  const isDiagramShowing = frame < diagramDuration;
+
+  const getCurrentImage = () => {
+    if (isDiagramShowing) return null;
+    const imageIndex = Math.floor((frame - diagramDuration) / framesPerImage) % imagesCount;
+    return images[imageIndex];
+  };
+
+  const currentImage = getCurrentImage();
 
   return (
     <ErrorBoundary>
@@ -565,8 +587,32 @@ export const MyComp: React.FC<{
           />
         ))}
 
-        {/* Images */}
-        <ImageSequence images={images} />
+        {isDiagramShowing ? (
+          <Img
+            src={staticFile(diagramUrl)}
+            style={{
+              position: 'absolute',
+              bottom: '10%', // Move the diagram 10% up from the bottom
+              left: '50%',
+              transform: 'translateX(-50%)', // Center horizontally
+              maxWidth: '80%',
+              maxHeight: '80%', // Reduce max height to fit better
+              opacity: interpolate(
+                frame,
+                [0, 30, diagramDuration - 30, diagramDuration],
+                [0, 1, 1, 0]
+              ),
+            }}
+          />
+        ) : (
+          currentImage && (
+            <ImageSequence 
+              images={[currentImage]} 
+              startFrame={diagramDuration}
+              duration={framesPerImage}
+            />
+          )
+        )}
 
         {/* Avatars */}
         <FadeIn duration={30}>

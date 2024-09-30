@@ -270,12 +270,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   console.log('[DEBUG] Received request:', req.body);
 
   try {
-    const { text, youtube, subject, template, speaker1Voice, speaker2Voice } = req.body;
+    const { text, youtubeUrl, subject, template, speaker1Voice, speaker2Voice } = req.body;
 
     let transcriptionResult;
-    if (youtube) {
+    if (youtubeUrl) {
       console.log('[DEBUG] Processing YouTube URL');
-      const audioFilePath = await downloadYoutubeAudio(youtube);
+      const audioFilePath = await downloadYoutubeAudio(youtubeUrl);
       transcriptionResult = await transcribeAudio(audioFilePath);
       fs.unlinkSync(audioFilePath); // Clean up the temporary audio file
     } else if (text) {
@@ -296,7 +296,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         audioDuration: 0,
       };
     } else {
-      throw new Error('Either text, youtube, or subject must be provided');
+      throw new Error('Either text, youtubeUrl, or subject must be provided');
     }
 
     console.log('[DEBUG] Generating dialogue');

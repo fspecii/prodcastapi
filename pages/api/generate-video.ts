@@ -10,35 +10,54 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { audioFileName, audioDuration, transcript, words } = req.body;
+  const { tempFileName, audioFileName, audioDuration } = req.body;
 
-  if (!audioFileName || !audioDuration) {
-    return res.status(400).json({ error: 'Audio file name and duration are required' });
+  if (!tempFileName || !audioFileName || !audioDuration) {
+    return res.status(400).json({ error: 'Temporary file name, audio file name, and audio duration are required' });
   }
 
   try {
     console.log('Starting video generation process');
     console.log('Audio duration:', audioDuration);
     
-    // Generate content (headlines and images)
+    // Read the transcription data from the temporary file
+    const tempFilePath = path.join(process.cwd(), 'temp', tempFileName);
+    const transcriptionData = JSON.parse(fs.readFileSync(tempFilePath, 'utf-8'));
+
+    console.log('Transcription data loaded. Last word end time:', 
+      transcriptionData.words[transcriptionData.words.length - 1].end);
+
+    // Generate content (headlines, images, and diagram descriptions)
     const contentResponse = await axios.post('http://localhost:3000/api/generate-content', {
-      transcript: transcript
+      transcript: transcriptionData.words.map((w: any) => w.word).join(' ')
     });
-    const { headlines, images, sessionId } = contentResponse.data;
+    const { headlines, images, diagramDescription, diagramUrl, sessionId } = contentResponse.data;
+
+    console.log('Received diagramDescription:', JSON.stringify(diagramDescription, null, 2));
+    console.log('Received diagramUrl:', diagramUrl);
+
+    // Ensure the diagram image exists
+    const diagramPath = path.join(process.cwd(), 'public', diagramUrl);
+    if (!fs.existsSync(diagramPath)) {
+      throw new Error(`Diagram image not found at ${diagramPath}`);
+    }
 
     const bundleLocation = await bundle(path.resolve('./remotion/index.ts'));
     console.log('Bundle created');
 
     const inputProps = {
-      transcription: { words },
+      transcription: transcriptionData,
       audioFileName,
       audioDuration: parseFloat(audioDuration),
       headlines,
-      images: images.map((img: string) => img.replace('/public/', '')) // Remove '/public/' from the path
+      images: images.map((img: string) => img.replace('/public/', '')), // Remove '/public/' from the path
+      diagramDescription, // Make sure this is passed correctly
+      diagramUrl, // Add this line
     };
 
-    console.log('generate-video: Input props:', inputProps);
+    console.log('generate-video: Input props:', JSON.stringify(inputProps, null, 2));
 
+    console.log('Getting compositions');
     const comps = await getCompositions(bundleLocation, { inputProps });
     console.log(`Found ${comps.length} compositions`);
     
@@ -64,7 +83,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log(`Rendering video to ${outputLocation}`);
 
     await renderMedia({
-      composition: video,
+      composition: {
+        ...video,
+        durationInFrames: durationInFrames
+      },
       serveUrl: bundleLocation,
       codec: "h264",
       outputLocation,
@@ -74,6 +96,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log(`Video rendering completed. Actual duration: ${durationInFrames} frames (${audioDuration} seconds)`);
 
     // Clean up the temporary files
+    fs.unlinkSync(tempFilePath);
     const tempImageDir = path.join(process.cwd(), 'public', 'temp', sessionId);
     fs.rmSync(tempImageDir, { recursive: true, force: true });
 
