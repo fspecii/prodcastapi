@@ -10,26 +10,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { tempFileName, audioFileName, audioDuration } = req.body;
+  const { audioFileName, audioDuration, transcript, words } = req.body;
 
-  if (!tempFileName || !audioFileName || !audioDuration) {
-    return res.status(400).json({ error: 'Temporary file name, audio file name, and audio duration are required' });
+  if (!audioFileName || !audioDuration) {
+    return res.status(400).json({ error: 'Audio file name and duration are required' });
   }
 
   try {
     console.log('Starting video generation process');
     console.log('Audio duration:', audioDuration);
     
-    // Read the transcription data from the temporary file
-    const tempFilePath = path.join(process.cwd(), 'temp', tempFileName);
-    const transcriptionData = JSON.parse(fs.readFileSync(tempFilePath, 'utf-8'));
-
-    console.log('Transcription data loaded. Last word end time:', 
-      transcriptionData.words[transcriptionData.words.length - 1].end);
-
     // Generate content (headlines and images)
     const contentResponse = await axios.post('http://localhost:3000/api/generate-content', {
-      transcript: transcriptionData.words.map((w: any) => w.word).join(' ')
+      transcript: transcript
     });
     const { headlines, images, sessionId } = contentResponse.data;
 
@@ -37,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('Bundle created');
 
     const inputProps = {
-      transcription: transcriptionData,
+      transcription: { words },
       audioFileName,
       audioDuration: parseFloat(audioDuration),
       headlines,
@@ -46,7 +39,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     console.log('generate-video: Input props:', inputProps);
 
-    console.log('Getting compositions');
     const comps = await getCompositions(bundleLocation, { inputProps });
     console.log(`Found ${comps.length} compositions`);
     
@@ -72,10 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log(`Rendering video to ${outputLocation}`);
 
     await renderMedia({
-      composition: {
-        ...video,
-        durationInFrames: durationInFrames
-      },
+      composition: video,
       serveUrl: bundleLocation,
       codec: "h264",
       outputLocation,
@@ -85,7 +74,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log(`Video rendering completed. Actual duration: ${durationInFrames} frames (${audioDuration} seconds)`);
 
     // Clean up the temporary files
-    fs.unlinkSync(tempFilePath);
     const tempImageDir = path.join(process.cwd(), 'public', 'temp', sessionId);
     fs.rmSync(tempImageDir, { recursive: true, force: true });
 
