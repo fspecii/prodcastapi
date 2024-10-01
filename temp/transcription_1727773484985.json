@@ -1,0 +1,422 @@
+{
+  "transcript": "hey everyone you know we always talk about you know diving deep into a topic right but today's dive well it's a bit of a doozy yeah it's deeply personal i guess you could say deeply personal in a way we never could have anticipated yeah and i to be honest i",
+  "generatedScript": "**Dialogue**\n\nSarah:  Hey everyone, welcome back to Smart and Crazy! Today, we're diving deep into a topic that's going to shake things up a bit – it's deeply personal, in a way we never anticipated. \n\nJohn:  Deeply personal? You're making it sound like we're about to spill some family secrets. Spill the beans, Sarah, what's the deal?\n\nSarah:  Hold your horses, John! It's not about gossip. It's about how deeply personal experiences can shape our perspectives and even change the way we see the world.  \n\nJohn:  Okay, I'm intrigued. Give me the scoop.\n\nSarah:  Imagine this: You're walking down the street, minding your own business, when suddenly, a rogue frisbee comes flying out of nowhere and knocks you right off your feet.  \n\nJohn:  Ouch! That's a rough way to start the day.  \n\nSarah:  Exactly! Now, you might be thinking, \"What are the odds? Why me?\". And that's where the deeply personal aspect comes in. This random, seemingly insignificant event can have a huge impact on your life. \n\nJohn:  So, a frisbee can actually change your life? That's a bit of a stretch.\n\nSarah:  It's not about the frisbee itself, John. It's about how you interpret that event.  Did it make you feel angry? Frustrated?  Or maybe you just laughed it off and moved on.  \n\nJohn:  I guess I'd be more inclined to laugh it off, unless it was a really expensive frisbee and I had to pay for it. \n\nSarah:  Exactly!  And that's the point. We all process experiences differently based on our own unique background and perspective.  \n\nJohn:  So, you're saying a frisbee can be a metaphor for how we deal with adversity in general?  That's a pretty big jump. \n\nSarah:  Think of it like this:  The frisbee is like a trigger – a moment that makes you stop and reflect.  It's like that moment when a song comes on that instantly transports you back to a specific time and place, you know?  \n\nJohn:  Ah, like the time you were playing that cheesy 80s power ballad on repeat while driving around in your old beat-up Volvo?\n\nSarah:  John! That was a very specific and unnecessary detail.  But yes, that's kind of what I mean.  \n\nJohn:  Alright, alright, I get it.  So, how do we connect this frisbee incident to our \"deeply personal\" topic?\n\nSarah:  Remember how we said these events can shape our perspectives? Well, they can also affect our choices and actions.  \n\nJohn:  You're saying a frisbee incident can make you a better or worse person?  \n\nSarah:  Not necessarily, but it can definitely influence your actions.  Think about it: if you're constantly getting knocked off your feet by random frisbees, maybe it's time to re-evaluate your life choices. Maybe you need to be more cautious, or maybe you need to learn how to better navigate the world around you.  \n\nJohn:  You know, I'm starting to see your point.  A frisbee can really be a catalyst for change, even if it's just a minor inconvenience. \n\nSarah:  Exactly!  And that's what makes this topic so intriguing – it's about the seemingly small moments that can have a profound impact on our lives.  \n\nJohn:  Okay, I'm sold.  But how do we make this practical?  I mean, how can we actually use this knowledge in our daily lives?  \n\nSarah:  Well, first, we need to understand the power of perception.  Every experience, no matter how small, has the potential to shape us. \n\nJohn:  So, we should be more mindful of the things that happen to us, even if they seem insignificant?\n\nSarah:  Yes, John! And also, we need to learn how to analyze our reactions.   If something makes you angry, ask yourself why.  Is it truly the thing that caused the anger, or is it something deeper?  \n\nJohn:  That's actually good advice.  I often find myself getting worked up over things that aren't really that important.  \n\nSarah:  See?  That's the power of self-reflection.  We can use these \"frisbee\" moments to learn more about ourselves and make better decisions in the future.  \n\nJohn:  So, we're basically saying that every experience, no matter how small, is an opportunity for growth.  \n\nSarah:  You got it!  It's about taking those random frisbee moments and using them to become more self-aware, more resilient, and ultimately, more capable of navigating the world with grace and understanding.  \n\nJohn:  Wow, Sarah, you've really turned a simple frisbee incident into a deep philosophical exploration.  I never thought I'd be having this conversation with you!\n\nSarah:  That's the beauty of Smart and Crazy, John – we never know what's going to come up!  But that's what makes it so exciting, right?  \n\nJohn:  You're right, Sarah.  And to think it all started with a rogue frisbee.  I bet nobody saw that coming!  \n\nSarah:  And that, my friends, is the power of \"deeply personal\" experiences – they can surprise us, challenge us, and ultimately, make us better versions of ourselves.  So, keep your eyes peeled for those frisbees, folks!  You never know what kind of wisdom they might hold.  \n\nJohn:  And if you do get hit by a frisbee, just remember – it might be a sign to reassess your life!\n\nSarah:  That's right!  And if you're feeling philosophical about your frisbee encounter, be sure to share your thoughts with us on social media!  We'd love to hear your stories.  \n\nJohn:  Until next time, everyone! Stay curious, and remember, the world is full of surprises.  \n\nSarah:  And don't forget to keep it smart and crazy!\n",
+  "words": [
+    {
+      "word": "hey",
+      "start": 0,
+      "end": 0.24,
+      "confidence": 0.96142507,
+      "speaker": 0,
+      "speaker_confidence": 0.16796875
+    },
+    {
+      "word": "everyone",
+      "start": 0.24,
+      "end": 0.74,
+      "confidence": 0.997976,
+      "speaker": 0,
+      "speaker_confidence": 0.16796875
+    },
+    {
+      "word": "you",
+      "start": 3.12,
+      "end": 3.28,
+      "confidence": 0.94735533,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "know",
+      "start": 3.28,
+      "end": 3.4399998,
+      "confidence": 0.9917944,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "we",
+      "start": 3.4399998,
+      "end": 3.6799998,
+      "confidence": 0.9995951,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "always",
+      "start": 3.6799998,
+      "end": 3.9199998,
+      "confidence": 0.9997589,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "talk",
+      "start": 3.9199998,
+      "end": 4.16,
+      "confidence": 0.9979373,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "about",
+      "start": 4.16,
+      "end": 4.66,
+      "confidence": 0.78391045,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "you",
+      "start": 5.2,
+      "end": 5.44,
+      "confidence": 0.9339086,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "know",
+      "start": 5.44,
+      "end": 5.8399997,
+      "confidence": 0.9799491,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "diving",
+      "start": 5.8399997,
+      "end": 6.08,
+      "confidence": 0.96330804,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "deep",
+      "start": 6.08,
+      "end": 6.3199997,
+      "confidence": 0.998245,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "into",
+      "start": 6.3199997,
+      "end": 6.64,
+      "confidence": 0.9994398,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "a",
+      "start": 6.64,
+      "end": 6.7999997,
+      "confidence": 0.99942625,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "topic",
+      "start": 6.7999997,
+      "end": 7.2999997,
+      "confidence": 0.99541634,
+      "speaker": 0,
+      "speaker_confidence": 0.5942383
+    },
+    {
+      "word": "right",
+      "start": 7.3599997,
+      "end": 7.8599997,
+      "confidence": 0.9973521,
+      "speaker": 0,
+      "speaker_confidence": 0
+    },
+    {
+      "word": "but",
+      "start": 8.24,
+      "end": 8.559999,
+      "confidence": 0.99961334,
+      "speaker": 0,
+      "speaker_confidence": 0.5917969
+    },
+    {
+      "word": "today's",
+      "start": 8.559999,
+      "end": 9.04,
+      "confidence": 0.99887997,
+      "speaker": 0,
+      "speaker_confidence": 0.5917969
+    },
+    {
+      "word": "dive",
+      "start": 9.04,
+      "end": 9.5255,
+      "confidence": 0.9782506,
+      "speaker": 0,
+      "speaker_confidence": 0.5917969
+    },
+    {
+      "word": "well",
+      "start": 10.0055,
+      "end": 10.5055,
+      "confidence": 0.99959725,
+      "speaker": 0,
+      "speaker_confidence": 0.08496094
+    },
+    {
+      "word": "it's",
+      "start": 11.8455,
+      "end": 12.085501,
+      "confidence": 0.9958321,
+      "speaker": 0,
+      "speaker_confidence": 0.08496094
+    },
+    {
+      "word": "a",
+      "start": 12.085501,
+      "end": 12.165501,
+      "confidence": 0.9997241,
+      "speaker": 0,
+      "speaker_confidence": 0.08496094
+    },
+    {
+      "word": "bit",
+      "start": 12.165501,
+      "end": 12.3255005,
+      "confidence": 0.99993765,
+      "speaker": 0,
+      "speaker_confidence": 0.08496094
+    },
+    {
+      "word": "of",
+      "start": 12.3255005,
+      "end": 12.4055,
+      "confidence": 0.9998927,
+      "speaker": 0,
+      "speaker_confidence": 0.08496094
+    },
+    {
+      "word": "a",
+      "start": 12.4055,
+      "end": 12.4855,
+      "confidence": 0.9981579,
+      "speaker": 0,
+      "speaker_confidence": 0.08496094
+    },
+    {
+      "word": "doozy",
+      "start": 12.4855,
+      "end": 12.9855,
+      "confidence": 0.9993222,
+      "speaker": 0,
+      "speaker_confidence": 0.08496094
+    },
+    {
+      "word": "yeah",
+      "start": 13.0455,
+      "end": 13.5455,
+      "confidence": 0.99750173,
+      "speaker": 0,
+      "speaker_confidence": 0.4873047
+    },
+    {
+      "word": "it's",
+      "start": 13.925501,
+      "end": 14.005501,
+      "confidence": 0.97961295,
+      "speaker": 0,
+      "speaker_confidence": 0.4873047
+    },
+    {
+      "word": "deeply",
+      "start": 14.005501,
+      "end": 14.4055,
+      "confidence": 0.99895394,
+      "speaker": 0,
+      "speaker_confidence": 0.4873047
+    },
+    {
+      "word": "personal",
+      "start": 14.4055,
+      "end": 14.9055,
+      "confidence": 0.966889,
+      "speaker": 0,
+      "speaker_confidence": 0.4873047
+    },
+    {
+      "word": "i",
+      "start": 15.2055,
+      "end": 15.3654995,
+      "confidence": 0.999788,
+      "speaker": 0,
+      "speaker_confidence": 0.39501953
+    },
+    {
+      "word": "guess",
+      "start": 15.3654995,
+      "end": 15.5255,
+      "confidence": 0.99992955,
+      "speaker": 0,
+      "speaker_confidence": 0.39501953
+    },
+    {
+      "word": "you",
+      "start": 15.5255,
+      "end": 15.6855,
+      "confidence": 0.80026567,
+      "speaker": 0,
+      "speaker_confidence": 0.39501953
+    },
+    {
+      "word": "could",
+      "start": 15.6855,
+      "end": 15.8455,
+      "confidence": 0.9999285,
+      "speaker": 0,
+      "speaker_confidence": 0.39501953
+    },
+    {
+      "word": "say",
+      "start": 15.8455,
+      "end": 16.2455,
+      "confidence": 0.99948585,
+      "speaker": 0,
+      "speaker_confidence": 0.39501953
+    },
+    {
+      "word": "deeply",
+      "start": 16.2455,
+      "end": 16.7255,
+      "confidence": 0.99946237,
+      "speaker": 0,
+      "speaker_confidence": 0.061523438
+    },
+    {
+      "word": "personal",
+      "start": 16.7255,
+      "end": 17.2055,
+      "confidence": 0.99940586,
+      "speaker": 0,
+      "speaker_confidence": 0.061523438
+    },
+    {
+      "word": "in",
+      "start": 17.2055,
+      "end": 17.3655,
+      "confidence": 0.98922884,
+      "speaker": 0,
+      "speaker_confidence": 0.061523438
+    },
+    {
+      "word": "a",
+      "start": 17.3655,
+      "end": 17.4455,
+      "confidence": 0.9994186,
+      "speaker": 0,
+      "speaker_confidence": 0.061523438
+    },
+    {
+      "word": "way",
+      "start": 17.4455,
+      "end": 17.685501,
+      "confidence": 0.9999778,
+      "speaker": 0,
+      "speaker_confidence": 0.033203125
+    },
+    {
+      "word": "we",
+      "start": 17.685501,
+      "end": 17.925499,
+      "confidence": 0.9986506,
+      "speaker": 0,
+      "speaker_confidence": 0.033203125
+    },
+    {
+      "word": "never",
+      "start": 17.925499,
+      "end": 18.1655,
+      "confidence": 0.9992576,
+      "speaker": 0,
+      "speaker_confidence": 0.033203125
+    },
+    {
+      "word": "could",
+      "start": 18.1655,
+      "end": 18.4055,
+      "confidence": 0.99975055,
+      "speaker": 0,
+      "speaker_confidence": 0.033203125
+    },
+    {
+      "word": "have",
+      "start": 18.4055,
+      "end": 18.6455,
+      "confidence": 0.86343706,
+      "speaker": 0,
+      "speaker_confidence": 0.033203125
+    },
+    {
+      "word": "anticipated",
+      "start": 18.6455,
+      "end": 19.1455,
+      "confidence": 0.9982884,
+      "speaker": 0,
+      "speaker_confidence": 0.033203125
+    },
+    {
+      "word": "yeah",
+      "start": 19.4455,
+      "end": 19.685501,
+      "confidence": 0.99863255,
+      "speaker": 0,
+      "speaker_confidence": 0.57714844
+    },
+    {
+      "word": "and",
+      "start": 19.685501,
+      "end": 19.8455,
+      "confidence": 0.9985905,
+      "speaker": 0,
+      "speaker_confidence": 0.57714844
+    },
+    {
+      "word": "i",
+      "start": 19.8455,
+      "end": 20.0055,
+      "confidence": 0.8911378,
+      "speaker": 0,
+      "speaker_confidence": 0.57714844
+    },
+    {
+      "word": "to",
+      "start": 20.085499,
+      "end": 20.245499,
+      "confidence": 0.999,
+      "speaker": 0,
+      "speaker_confidence": 0.57714844
+    },
+    {
+      "word": "be",
+      "start": 20.245499,
+      "end": 20.3255,
+      "confidence": 0.99968004,
+      "speaker": 0,
+      "speaker_confidence": 0.57714844
+    },
+    {
+      "word": "honest",
+      "start": 20.3255,
+      "end": 20.6455,
+      "confidence": 0.9906255,
+      "speaker": 0,
+      "speaker_confidence": 0.57714844
+    },
+    {
+      "word": "i",
+      "start": 20.6455,
+      "end": 20.9105,
+      "confidence": 0.9672617,
+      "speaker": 0,
+      "speaker_confidence": 0.57714844
+    }
+  ]
+}

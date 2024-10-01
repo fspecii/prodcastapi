@@ -9,6 +9,7 @@ import { INSTRUCTION_TEMPLATES } from '../../templates';
 import { getAudioDurationInSeconds } from 'get-audio-duration';
 import ffmpeg from 'fluent-ffmpeg';
 import { Readable } from 'stream';
+import axios from 'axios'; // Add this import
 
 const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY;
 if (!DEEPGRAM_API_KEY) {
@@ -173,8 +174,9 @@ async function reformatDialogue(dialogue: string): Promise<string> {
     12. Add occasional callbacks to earlier points in the conversation to create a more cohesive and interconnected discussion.
     13. Include thought-provoking questions or hypothetical scenarios to encourage listener engagement.
     14. Maintain a consistent tone and pacing throughout the extended dialogue, ensuring it remains engaging from start to finish.
-    15. Place the outro only at the very end of the dialogue.
+    15. Place the outro at the end of the dialogue, ensuring no additional content follows it.
     16. Remove any quotation marks from the script.
+    17. Expand the dialogue within the main body of the conversation, not after the outro.
     Provide only the reformatted and expanded dialogue without any additional comments.
   `;
 
@@ -239,7 +241,7 @@ async function combineAudioFiles(audioFiles: string[], outputFile: string): Prom
 
 async function generateScript(subject: string): Promise<string> {
   console.log('[DEBUG] Generating script using Gemini');
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const scriptTemplate = INSTRUCTION_TEMPLATES.scriptWriter;
   const prompt = `
@@ -262,6 +264,25 @@ async function generateScript(subject: string): Promise<string> {
   return generatedScript;
 }
 
+async function generateVideo(transcription: any, audioFileName: string, audioDuration: number): Promise<string> {
+  try {
+    const response = await axios.post('http://localhost:3000/api/generate-video', {
+      transcription,
+      audioFileName,
+      audioDuration,
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.data.videoUrl;
+  } catch (error) {
+    console.error('[ERROR] Error generating video:', error);
+    throw error;
+  }
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -272,35 +293,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { text, youtubeUrl, subject, template, speaker1Voice, speaker2Voice } = req.body;
 
-    let transcriptionResult;
+    let initialTranscript: string;
     if (youtubeUrl) {
       console.log('[DEBUG] Processing YouTube URL');
       const audioFilePath = await downloadYoutubeAudio(youtubeUrl);
-      transcriptionResult = await transcribeAudio(audioFilePath);
+      const transcriptionResult = await transcribeAudio(audioFilePath);
+      initialTranscript = transcriptionResult.transcript;
       fs.unlinkSync(audioFilePath); // Clean up the temporary audio file
     } else if (text) {
       console.log('[DEBUG] Processing text input');
-      transcriptionResult = {
-        transcript: text,
-        words: [],
-        audioFileName: '',
-        audioDuration: 0,
-      };
+      initialTranscript = text;
     } else if (subject) {
       console.log('[DEBUG] Generating script from subject');
-      const script = await generateScript(subject);
-      transcriptionResult = {
-        transcript: script,
-        words: [],
-        audioFileName: '',
-        audioDuration: 0,
-      };
+      initialTranscript = await generateScript(subject);
     } else {
       throw new Error('Either text, youtubeUrl, or subject must be provided');
     }
 
     console.log('[DEBUG] Generating dialogue');
-    let dialogue = await generateDialogue(transcriptionResult.transcript, INSTRUCTION_TEMPLATES[template || 'podcast']);
+    let dialogue = await generateDialogue(initialTranscript, INSTRUCTION_TEMPLATES[template || 'podcast']);
     
     // Parse and check dialogue length
     let dialogueItems = dialogue.split('\n').filter(line => line.startsWith('speaker-1:') || line.startsWith('speaker-2:'));
@@ -341,16 +352,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const audioDuration = await getAudioDurationInSeconds(outputFile);
     console.log(`[DEBUG] Generated audio duration: ${audioDuration} seconds`);
 
+    // Transcribe the generated dialogue using Deepgram
+    console.log('[DEBUG] Transcribing generated dialogue');
+    const finalTranscriptionResult = await transcribeAudio(outputFile);
+
+    const audioFileName = path.basename(outputFile);
+    const audioUrl = `/audio/${audioFileName}`;
+
+    // Save transcription to a temporary file
+    const tempDir = path.join(process.cwd(), 'temp');
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir, { recursive: true });
+    }
+    const tempFileName = `transcription_${Date.now()}.json`;
+    const tempFilePath = path.join(tempDir, tempFileName);
+    fs.writeFileSync(tempFilePath, JSON.stringify(finalTranscriptionResult));
+
     res.status(200).json({ 
-      audioUrl: `/audio/${path.basename(outputFile)}`,
-      transcript: transcript,
-      words: transcriptionResult.words,
-      audioDuration: audioDuration,
+      audioUrl,
+      tempFileName,
+      audioFileName,
+      audioDuration,
+      transcript: finalTranscriptionResult.transcript,
     });
   } catch (error) {
-    console.error('[ERROR] Error generating audio:', error);
+    console.error('[ERROR] Error processing request:', error);
     res.status(500).json({ 
-      error: 'Error generating audio', 
+      error: 'Error processing request', 
       details: error instanceof Error ? error.message : String(error)
     });
   }

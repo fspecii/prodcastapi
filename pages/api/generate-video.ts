@@ -4,6 +4,7 @@ import { getCompositions, renderMedia } from "@remotion/renderer";
 import path from "path";
 import fs from 'fs';
 import axios from 'axios';
+import { addVideo } from '../../lib/db';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -99,6 +100,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     fs.unlinkSync(tempFilePath);
     const tempImageDir = path.join(process.cwd(), 'public', 'temp', sessionId);
     fs.rmSync(tempImageDir, { recursive: true, force: true });
+
+    // Add the video to the database
+    await addVideo(outputFilename);
 
     const videoUrl = `/videos/${outputFilename}`;
     res.status(200).json({ videoUrl });
