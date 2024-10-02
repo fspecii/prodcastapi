@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { upload } from 'youtube-videos-uploader';
+import { upload } from 'youtube-videos-uploader-ichiin';
 import fs from 'fs';
 import path from 'path';
 

@@ -9,7 +9,7 @@ import { INSTRUCTION_TEMPLATES } from '../../templates';
 import { getAudioDurationInSeconds } from 'get-audio-duration';
 import ffmpeg from 'fluent-ffmpeg';
 import { Readable } from 'stream';
-import axios from 'axios'; // Add this import
+import axios from 'axios';
 
 const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY;
 if (!DEEPGRAM_API_KEY) {
@@ -122,10 +122,26 @@ async function generateDialogue(transcript: string, template: any): Promise<stri
 
   console.log('[DEBUG] Gemini prompt:', prompt);
 
-  const result = await model.generateContent(prompt);
-  const generatedDialogue = result.response.text();
-  console.log('[DEBUG] Generated dialogue from Gemini:', generatedDialogue);
-  return generatedDialogue;
+  let retries = 0;
+  const maxRetries = 3;
+  while (retries < maxRetries) {
+    try {
+      const result = await model.generateContent(prompt);
+      const generatedDialogue = result.response.text();
+      console.log('[DEBUG] Generated dialogue from Gemini:', generatedDialogue);
+      return generatedDialogue;
+    } catch (error) {
+      console.error(`[ERROR] Gemini API error (attempt ${retries + 1}):`, error);
+      retries++;
+      if (retries < maxRetries) {
+        console.log(`Waiting 20 seconds before retry...`);
+        await new Promise(resolve => setTimeout(resolve, 20000));
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error('Failed to generate dialogue after multiple attempts');
 }
 
 async function extendDialogue(dialogue: string): Promise<string> {
@@ -144,10 +160,26 @@ async function extendDialogue(dialogue: string): Promise<string> {
     4. Do not use any other speaker labels.
   `;
 
-  const result = await model.generateContent(extendPrompt);
-  const extendedDialogue = result.response.text();
-  console.log('[DEBUG] Extended dialogue:', extendedDialogue);
-  return extendedDialogue;
+  let retries = 0;
+  const maxRetries = 3;
+  while (retries < maxRetries) {
+    try {
+      const result = await model.generateContent(extendPrompt);
+      const extendedDialogue = result.response.text();
+      console.log('[DEBUG] Extended dialogue:', extendedDialogue);
+      return extendedDialogue;
+    } catch (error) {
+      console.error(`[ERROR] Gemini API error (attempt ${retries + 1}):`, error);
+      retries++;
+      if (retries < maxRetries) {
+        console.log(`Waiting 20 seconds before retry...`);
+        await new Promise(resolve => setTimeout(resolve, 20000));
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error('Failed to extend dialogue after multiple attempts');
 }
 
 async function reformatDialogue(dialogue: string): Promise<string> {
@@ -182,10 +214,26 @@ async function reformatDialogue(dialogue: string): Promise<string> {
 
   console.log('[DEBUG] Reformat prompt:', reformat_prompt);
 
-  const result = await model.generateContent(reformat_prompt);
-  const reformattedDialogue = result.response.text();
-  console.log('[DEBUG] Reformatted dialogue:', reformattedDialogue);
-  return reformattedDialogue;
+  let retries = 0;
+  const maxRetries = 3;
+  while (retries < maxRetries) {
+    try {
+      const result = await model.generateContent(reformat_prompt);
+      const reformattedDialogue = result.response.text();
+      console.log('[DEBUG] Reformatted dialogue:', reformattedDialogue);
+      return reformattedDialogue;
+    } catch (error) {
+      console.error(`[ERROR] Gemini API error (attempt ${retries + 1}):`, error);
+      retries++;
+      if (retries < maxRetries) {
+        console.log(`Waiting 20 seconds before retry...`);
+        await new Promise(resolve => setTimeout(resolve, 20000));
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error('Failed to reformat dialogue after multiple attempts');
 }
 
 async function generateAudio(text: string, voice: string): Promise<string> {
@@ -258,10 +306,26 @@ async function generateScript(subject: string): Promise<string> {
 
   console.log('[DEBUG] Script generation prompt:', prompt);
 
-  const result = await model.generateContent(prompt);
-  const generatedScript = result.response.text();
-  console.log('[DEBUG] Generated script:', generatedScript);
-  return generatedScript;
+  let retries = 0;
+  const maxRetries = 3;
+  while (retries < maxRetries) {
+    try {
+      const result = await model.generateContent(prompt);
+      const generatedScript = result.response.text();
+      console.log('[DEBUG] Generated script:', generatedScript);
+      return generatedScript;
+    } catch (error) {
+      console.error(`[ERROR] Gemini API error (attempt ${retries + 1}):`, error);
+      retries++;
+      if (retries < maxRetries) {
+        console.log(`Waiting 20 seconds before retry...`);
+        await new Promise(resolve => setTimeout(resolve, 20000));
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error('Failed to generate script after multiple attempts');
 }
 
 async function generateVideo(transcription: any, audioFileName: string, audioDuration: number): Promise<string> {

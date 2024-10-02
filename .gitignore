@@ -21,6 +21,7 @@
 *.pem
 *.mp4
 *.mp3
+*.json
 
 # debug
 npm-debug.log*
@@ -28,7 +29,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+#.env*.local
 
 # vercel
 .vercel
@@ -38,4 +39,4 @@ yarn-error.log*
 next-env.d.ts
 
 # Add this line if it's not already present
-.env
+#.env
